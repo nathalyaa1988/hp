@@ -1,23 +1,24 @@
-# cloudbuild.yaml
+# cloudbuild.yaml (Na raiz do repositório hp/)
+
 steps:
-  # Esta etapa constrói a imagem a partir do Dockerfile localizado no subdiretório hp-ingestion
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [
-      'build',
-      '-t', 'gcr.io/$PROJECT_ID/hp-ingestion-image',
-      './hp-ingestion'
-    ]
-  # Esta etapa faz o deploy da imagem construída no Cloud Run
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: [
-      'run', 'deploy', 'hp-ingestion-runner',
-      '--image', 'gcr.io/$PROJECT_ID/hp-ingestion-image',
-      '--region', 'us-central1',
-      '--platform', 'managed',
-      '--no-allow-unauthenticated', # Não permite acesso sem autenticação (Melhor prática)
-      '--execution-environment', 'gen2',
-      '--timeout', '540',
-      '--set-env-vars', 'INSTANCE_ID=hp-instance-global,DATABASE_ID=hp-database,GCP_PROJECT=$PROJECT_ID,REGION=us-central1'
-    ]
+# 1. Constrói a imagem Docker a partir do subdiretório hp-ingestion
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t', 'gcr.io/$PROJECT_ID/hp-ingestion-image',
+    './hp-ingestion'
+  ]
+# 2. Faz o deploy da imagem no Cloud Run (Note: Ele usará os ENVIRONMENT VARIABLES definidos no CLI)
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: [
+    'run', 'deploy', '${_SERVICE_NAME}',  # Usa variável de ambiente do build
+    '--image', 'gcr.io/$PROJECT_ID/hp-ingestion-image',
+    '--region', '${_REGION}',
+    '--platform', 'managed',
+    '--allow-unauthenticated', 
+    '--timeout', '540',
+    '--memory', '512Mi',
+    '--set-env-vars', 'INSTANCE_ID=${_INSTANCE_ID},DATABASE_ID=${_DATABASE_ID},GCP_PROJECT=${_GCP_PROJECT},REGION=${_REGION}'
+  ]
 images:
   - 'gcr.io/$PROJECT_ID/hp-ingestion-image'
