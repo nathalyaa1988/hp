@@ -1,0 +1,5 @@
+flask
+google-cloud-spanner
+google-cloud-aiplatform
+functions-framework
+requests
