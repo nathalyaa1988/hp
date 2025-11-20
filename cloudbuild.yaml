@@ -8,17 +8,17 @@ steps:
     '-t', 'gcr.io/$PROJECT_ID/hp-ingestion-image',
     './hp-ingestion'
   ]
-# 2. Faz o deploy da imagem no Cloud Run (Note: Ele usará os ENVIRONMENT VARIABLES definidos no CLI)
+# 2. Faz o deploy da imagem no Cloud Run
 - name: 'gcr.io/cloud-builders/gcloud'
   args: [
-    'run', 'deploy', '${_SERVICE_NAME}',  # Usa variável de ambiente do build
+    'run', 'deploy', 'hp-ingestion-runner',
     '--image', 'gcr.io/$PROJECT_ID/hp-ingestion-image',
-    '--region', '${_REGION}',
+    '--region', 'us-central1',
     '--platform', 'managed',
     '--allow-unauthenticated', 
     '--timeout', '540',
     '--memory', '512Mi',
-    '--set-env-vars', 'INSTANCE_ID=${_INSTANCE_ID},DATABASE_ID=${_DATABASE_ID},GCP_PROJECT=${_GCP_PROJECT},REGION=${_REGION}'
+    '--set-env-vars', 'INSTANCE_ID=demo-hp,DATABASE_ID=hp-database,GCP_PROJECT=$PROJECT_ID,REGION=us-central1'
   ]
 images:
   - 'gcr.io/$PROJECT_ID/hp-ingestion-image'
