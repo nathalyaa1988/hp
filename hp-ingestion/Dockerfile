@@ -19,5 +19,8 @@ EXPOSE 8080
 
 # Comando para iniciar o servidor Flask
 # Isso garante que o servidor Flask (que chamará o main.py via gatilho HTTP) esteja rodando
-CMD ["flask", "run", "--host=0.0.0.0", "--port=8080"]
+CMD ["functions-framework", "--target", "ingest_harry_potter_data", "--port", "8080"]
+# Dockerfile na pasta hp-ingestion/
+# ... (outras etapas)
+
 
