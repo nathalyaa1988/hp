@@ -1,0 +1,48 @@
+{
+  "tables": [
+    {
+      "table_name": "Characters",
+      "file_patterns": [
+        "gs://cumbuca/characters.json"
+      ],
+      "columns": [
+        {"column_name": "id", "source_column": "id"},
+        {"column_name": "name", "source_column": "name"},
+        {"column_name": "birth", "source_column": "birth"},
+        {"column_name": "death", "source_column": "death"},
+        {"column_name": "species", "source_column": "species"},
+        {"column_name": "ancestry", "source_column": "ancestry"},
+        {"column_name": "gender", "source_column": "gender"},
+        {"column_name": "hair_color", "source_column": "hair_color"},
+        {"column_name": "eye_color", "source_column": "eye_color"},
+        {"column_name": "wand", "source_column": "wand"},
+        {"column_name": "patronus", "source_column": "patronus"},
+        {"column_name": "house", "source_column": "house"},
+        {"column_name": "associated_groups", "source_column": "associated_groups"},
+        {"column_name": "books_featured_in", "source_column": "books_featured_in"}
+      ]
+    },
+    {
+      "table_name": "Spells",
+      "file_patterns": [
+        "gs://cumbuca/spells.json"
+      ],
+      "columns": [
+        {"column_name": "id", "source_column": "id"},
+        {"column_name": "name", "source_column": "name"},
+        {"column_name": "birth", "source_column": "birth"},
+        {"column_name": "death", "source_column": "death"},
+        {"column_name": "species", "source_column": "species"},
+        {"column_name": "ancestry", "source_column": "ancestry"},
+        {"column_name": "gender", "source_column": "gender"},
+        {"column_name": "hair_color", "source_column": "hair_color"},
+        {"column_name": "eye_color", "source_column": "eye_color"},
+        {"column_name": "wand", "source_column": "wand"},
+        {"column_name": "patronus", "source_column": "patronus"},
+        {"column_name": "house", "source_column": "house"},
+        {"column_name": "associated_groups", "source_column": "associated_groups"},
+        {"column_name": "books_featured_in", "source_column": "books_featured_in"}
+      ]
+    }
+  ]
+}
