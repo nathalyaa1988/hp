@@ -32,7 +32,6 @@ steps:
     '--timeout', '1800', # Timeout alto para inicialização do Spanner
     '--memory', '512Mi',
     # Variáveis de ambiente passadas para o contêiner
-    # As variáveis INSTANCE_ID, DATABASE_ID, GCP_PROJECT, REGION são passadas com o prefixo _ para o contêiner
     '--set-env-vars', 'INSTANCE_ID=${_INSTANCE_ID},DATABASE_ID=${_DATABASE_ID},GCP_PROJECT=${_GCP_PROJECT},REGION=${_REGION}',
     # Conector VPC: CRÍTICO para acessar o Spanner
     '--vpc-connector', 'spanner-connector' 
