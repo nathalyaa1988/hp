@@ -1,3 +1,5 @@
+# Define a imagem base: Essencial para rodar Python 3.11
+FROM python:3.11-slim
 
 # Define o diretório de trabalho dentro do container
 WORKDIR /app
@@ -6,7 +8,7 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt --no-cache-dir
 
-# Copia o restante do código (incluindo app.py)
+# Copia o restante do código (incluindo main.py e data.py)
 COPY . .
 
 # Variáveis de ambiente
@@ -16,4 +18,6 @@ ENV PORT 8080
 EXPOSE 8080
 
 # Comando para iniciar o servidor Flask
+# Isso garante que o servidor Flask (que chamará o main.py via gatilho HTTP) esteja rodando
 CMD ["flask", "run", "--host=0.0.0.0", "--port=8080"]
+
