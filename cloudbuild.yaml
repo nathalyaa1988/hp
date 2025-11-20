@@ -5,6 +5,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: [
     'build',
+    '-f', 'hp-ingestion/Dockerfile',  # Especifica ONDE está o arquivo
     '-t', 'gcr.io/$PROJECT_ID/hp-ingestion-image',
     './hp-ingestion'
   ]
