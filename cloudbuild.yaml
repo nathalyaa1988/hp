@@ -1,5 +1,9 @@
+# Este arquivo orquestra o build e o deploy do serviço de ingestão no Cloud Run.
+# Ele usa variáveis de substituição passadas pelo comando gcloud builds submit.
+
 options:
-  logging: CLOUD_LOGGING_ONLY
+  # Corrige o problema de log de build que exige um bucket de logs ou Cloud Logging.
+  logging: CLOUD_LOGGING_ONLY 
 
 steps:
 # 1. Constrói a imagem Docker a partir do subdiretório hp-ingestion
@@ -8,7 +12,9 @@ steps:
   args: [
     'build',
     '-f', 'hp-ingestion/Dockerfile',  
-    '-t', 'gcr.io/$PROJECT_ID/${_SERVICE_NAME}-image', # Usa a variável _SERVICE_NAME
+    # Tag da imagem: usa a variável de substituição aqui
+    '-t', 'gcr.io/$PROJECT_ID/${_SERVICE_NAME}-image', 
+    # Contexto de build: a raiz do repositório
     '.'
   ]
 # 2. Faz o deploy da imagem no Cloud Run (Mapeando todas as variáveis)
