@@ -3,6 +3,7 @@
 options:
   logging: CLOUD_LOGGING_ONLY # Força o logging a ir apenas para o Cloud Logging,
                              # contornando a exigência do logs_bucket.
+
 steps:
 # 1. Constrói a imagem Docker a partir do subdiretório hp-ingestion
 - name: 'gcr.io/cloud-builders/docker'
@@ -10,7 +11,7 @@ steps:
     'build',
     '-f', 'hp-ingestion/Dockerfile',  # Especifica ONDE está o arquivo
     '-t', 'gcr.io/$PROJECT_ID/hp-ingestion-image',
-    './hp-ingestion'
+    '.'
   ]
 # 2. Faz o deploy da imagem no Cloud Run
 - name: 'gcr.io/cloud-builders/gcloud'
