@@ -10,7 +10,7 @@ steps:
   args: [
     'build',
     '-f', 'hp-ingestion/Dockerfile',  # Especifica ONDE está o arquivo
-    '-t', 'gcr.io/$PROJECT_ID/hp-ingestion-image',
+    '-t', 'gcr.io/$PROJECT_ID/${_hp-ingestion}-image',
     '.'
   ]
 # 2. Faz o deploy da imagem no Cloud Run
@@ -22,9 +22,10 @@ steps:
     '--region', '${_us-central1},
     '--platform', 'managed',
     '--allow-unauthenticated', 
-    '--timeout', '540',
+    '--timeout', '1800',
     '--memory', '512Mi',
     '--set-env-vars', 'INSTANCE_ID=${_demo-hp},DATABASE_ID=${_hp-database},GCP_PROJECT=${_PROJECT_ID},REGION=${_us-central1$}'
+    '--vpc-connector', 'spanner-connector' 
   ]
 images:
-  - 'gcr.io/$PROJECT_ID/hp-ingestion-image'
+  - 'gcr.io/$PROJECT_ID/${_hp-ingestion}-image'
