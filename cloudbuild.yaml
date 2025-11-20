@@ -14,16 +14,17 @@ steps:
     '.'
   ]
 # 2. Faz o deploy da imagem no Cloud Run
+- id: 'DEPLOY SERVICE'
 - name: 'gcr.io/cloud-builders/gcloud'
   args: [
-    'run', 'deploy', 'hp-ingestion-runner',
-    '--image', 'gcr.io/$PROJECT_ID/hp-ingestion-image',
-    '--region', 'us-central1',
+    'run', 'deploy', '${_hp-ingestion-runner}',
+    '--image', 'gcr.io/$PROJECT_ID/${_hp-ingestion}-image',
+    '--region', '${_us-central1},
     '--platform', 'managed',
     '--allow-unauthenticated', 
     '--timeout', '540',
     '--memory', '512Mi',
-    '--set-env-vars', 'INSTANCE_ID=demo-hp,DATABASE_ID=hp-database,GCP_PROJECT=$PROJECT_ID,REGION=us-central1'
+    '--set-env-vars', 'INSTANCE_ID=${_demo-hp},DATABASE_ID=${_hp-database},GCP_PROJECT=${_PROJECT_ID},REGION=${_us-central1$}'
   ]
 images:
   - 'gcr.io/$PROJECT_ID/hp-ingestion-image'
