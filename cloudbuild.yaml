@@ -1,5 +1,8 @@
 # cloudbuild.yaml (Na raiz do repositório hp/)
-
+# cloudbuild.yaml (Adicione esta seção no início)
+options:
+  logging: CLOUD_LOGGING_ONLY # Força o logging a ir apenas para o Cloud Logging,
+                             # contornando a exigência do logs_bucket.
 steps:
 # 1. Constrói a imagem Docker a partir do subdiretório hp-ingestion
 - name: 'gcr.io/cloud-builders/docker'
