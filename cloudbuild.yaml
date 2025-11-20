@@ -9,34 +9,35 @@ steps:
 # 1. Constrói a imagem Docker a partir do subdiretório hp-ingestion
 - id: 'BUILD IMAGE'
   name: 'gcr.io/cloud-builders/docker'
-  args: [
-    'build',
-    '-f', 'hp-ingestion/Dockerfile',  
-    # Tag da imagem: usa a variável de substituição aqui
-    '-t', 'gcr.io/$PROJECT_ID/${_SERVICE_NAME}-image', 
-    # Contexto de build: a raiz do repositório
-    '.'
-  ]
+  args:
+  - 'build'
+  - '-f'
+  - 'hp-ingestion/Dockerfile'
+  - '-t'
+  - 'gcr.io/$PROJECT_ID/${_SERVICE_NAME}-image'
+  - '.'
 # 2. Faz o deploy da imagem no Cloud Run (Mapeando todas as variáveis)
 - id: 'DEPLOY SERVICE'
   name: 'gcr.io/cloud-builders/gcloud'
-  args: [
-    # Nome do Serviço: usa a variável do CLI
-    'run', 'deploy', '${_SERVICE_NAME}',  
-    # Imagem
-    '--image', 'gcr.io/$PROJECT_ID/${_SERVICE_NAME}-image',
-    # Região (usa a variável passada pelo CLI)
-    '--region', '${_REGION}',              
-    '--platform', 'managed',
-    '--allow-unauthenticated', 
-    '--timeout', '1800', # Timeout alto para inicialização do Spanner
-    '--memory', '512Mi',
-    # Variáveis de ambiente passadas para o contêiner
-    # CORREÇÃO: Removendo o $ final e garantindo vírgulas e chaves corretas
-    '--set-env-vars', 'INSTANCE_ID=${_INSTANCE_ID},DATABASE_ID=${_DATABASE_ID},GCP_PROJECT=${_GCP_PROJECT},REGION=${_REGION}',
-    # Conector VPC: CRÍTICO para acessar o Spanner
-    '--vpc-connector', 'spanner-connector' 
-  ]
+  args:
+  - 'run'
+  - 'deploy'
+  - '${_SERVICE_NAME}'
+  - '--image'
+  - 'gcr.io/$PROJECT_ID/${_SERVICE_NAME}-image'
+  - '--region'
+  - '${_REGION}'
+  - '--platform'
+  - 'managed'
+  - '--allow-unauthenticated'
+  - '--timeout'
+  - '1800'
+  - '--memory'
+  - '512Mi'
+  - '--set-env-vars'
+  - 'INSTANCE_ID=${_INSTANCE_ID},DATABASE_ID=${_DATABASE_ID},GCP_PROJECT=${_GCP_PROJECT},REGION=${_REGION}'
+  - '--vpc-connector'
+  - 'spanner-connector'
 images:
 # Lista a imagem a ser salva no Artifact Registry
 - 'gcr.io/$PROJECT_ID/${_SERVICE_NAME}-image'
