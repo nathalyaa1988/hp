@@ -70,10 +70,10 @@ with db.snapshot() as snap:
 
 # Embeddings para Personagens
 with db.snapshot() as snap:
-    rows = snap.execute_sql("SELECT CharacterID, Description FROM Characters")
+    rows = snap.execute_sql("SELECT CharacterID, Name FROM Characters")
     for row in rows:
         cid, desc = row
-        # Gera o vetor para a descrição do personagem
+        # Gera o vetor para o nome do personagem
         try:
             vector = embed(desc or "")
             with db.batch() as batch:
